@@ -28,6 +28,7 @@ function edgeCases(userNumber) {
 function guessGame() {
     // Number of current user guesses.
     let guesses = [];
+    let userName = prompt("Please enter your name");
     // While loop breaks when return is called.
     while (true) {
         //Prompt the user for a guess and parse into a number.
@@ -38,9 +39,9 @@ function guessGame() {
         }
         // Switch case to determine if userInput === secretNumber. If input !== secretNumber, increment guesses and move to next case.
         switch (true) {
-            case userInput < secretNumber: alert('Higher'); guesses.push(userInput); break;
-            case userInput > secretNumber: alert('Lower'); guesses.push(userInput); break;
-            case userInput === secretNumber: guesses.push(userInput); alert('Correct! Your previous guesses were: "' + guesses.join(", ") + '!"'); return; // Breaks while loop.
+            case userInput < secretNumber: alert('Sorry ' + userName + ', Guess higher.'); guesses.push(userInput); break;
+            case userInput > secretNumber: alert('Sorry ' + userName + ', Guess lower.'); guesses.push(userInput); break;
+            case userInput === secretNumber: guesses.push(userInput); alert('That is correct ' + userName + '! Your previous guesses were: "' + guesses.join(", ") + '!"'); return; // Breaks while loop.
             default: alert("Invalid input"); break;
         }
     }
