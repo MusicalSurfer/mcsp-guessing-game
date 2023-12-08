@@ -1,11 +1,19 @@
-let minGuess = 1;
-let maxGuess = 10;
-const secretNumber = getRandomIntInclusive(maxGuess);
+const minGuess = 1;
+const maxGuess = 10;
+const secretNumber = getRandomIntInclusive(minGuess, maxGuess);
 
-function getRandomIntInclusive(max) {
-    return Math.floor(Math.random() * max) + 1;
+function getRandomIntInclusive(min, max) {
+    return Math.floor(
+        Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + min
+    );
 }
-var userInput = prompt("Please guess the secret number");
+var userInput = prompt(
+    "Please guess the secret number between " +
+        minGuess +
+        " and " +
+        maxGuess +
+        "."
+);
 
 function guessOnce(input) {
     let guessedCorrectly = false;
