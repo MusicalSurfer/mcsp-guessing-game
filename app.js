@@ -2,23 +2,17 @@
 const minGuess = 1;
 const maxGuess = 10;
 
-// Generate a random number between minGuess and maxGuess (inclusive)
-const secretNumber = getRandomIntInclusive(minGuess, maxGuess);
-
 // Flag to determine if the game should repeat
 let repeatGame = true;
 
 // Object to hold player highscores
 let players = {};
 
-// Function to add a new player to the players object
-function addPlayer(userName, guesses) {
-    let newPlayer = { highScore: guesses };
-    players[userName] = newPlayer;
-}
-
 // Main function to run the guessing game
 function guessGame() {
+    // Generate a new random number for each game
+    const secretNumber = getRandomIntInclusive(minGuess, maxGuess);
+
     let guesses = 0;
     let userName = prompt("Please enter your name");
 
