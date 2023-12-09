@@ -62,6 +62,11 @@ function newPlayerAdd(userName, guesses) {
     }
 }
 
+function addPlayer(userName, guesses) {
+    let newPlayer = { highScore: guesses };
+    players[userName] = newPlayer;
+}
+
 // Function to generate a random number between min and max (inclusive)
 function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + min);
