@@ -11,10 +11,9 @@ let repeatGame = true;
 // Object to hold player highscores
 let players = {};
 
-// Function to add a new player to the players object
-function addPlayer(userName, guesses) {
-    let newPlayer = { highScore: guesses };
-    players[userName] = newPlayer;
+// Function to generate a random number between min and max (inclusive)
+function getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + min);
 }
 
 // Main function to run the guessing game
@@ -53,24 +52,10 @@ function guessGame() {
         }
     }
 }
-
-// Function to add a new player or update an existing player's score
-function newPlayerAdd(userName, guesses) {
-    if (!(userName in players)) {
-        addPlayer(userName, guesses);
-        return true; // Player was added for the first time
-    } else {
-        // Compare current score with previous highScore
-        let difference = guesses - players[userName].highScore;
-        alert('That is correct ' + userName + '! You ' + (difference < 0 ? 'beat' : (difference > 0 ? 'did better' : 'tied with')) + ' your previous attempt by ' + Math.abs(difference) + '!');
-        players[userName].highScore = Math.min(guesses, players[userName].highScore);
-        return false; // Player already existed in players object
-    }
-}
-
-// Function to generate a random number between min and max (inclusive)
-function getRandomIntInclusive(min, max) {
-    return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + min);
+// Main loop: while repeatGame is true, repeat guessGame and update repeatGame using playAgain
+while (repeatGame) {
+    guessGame();
+    repeatGame = playAgain();
 }
 
 // Function to prompt the user for a guess
@@ -87,14 +72,33 @@ function edgeCases(userNumber) {
     return false; // Input is a number/integer
 }
 
+// Function to generate a random number between min and max (inclusive)
+function getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + min);
+}
+
+// Function to add a new player or update an existing player's score
+function newPlayerAdd(userName, guesses) {
+    if (!(userName in players)) {
+        addPlayer(userName, guesses);
+        return true; // Player was added for the first time
+    } else {
+        // Compare current score with previous highScore
+        let difference = guesses - players[userName].highScore;
+        alert('That is correct ' + userName + '! You ' + (difference < 0 ? 'beat' : (difference > 0 ? 'did better' : 'tied with')) + ' your previous attempt by ' + Math.abs(difference) + '!');
+        players[userName].highScore = Math.min(guesses, players[userName].highScore);
+        return false; // Player already existed in players object
+    }
+}
+
+// Function to be used in newPlayerAdd to add a new player to the players object
+function addPlayer(userName, guesses) {
+    let newPlayer = { highScore: guesses };
+    players[userName] = newPlayer;
+}
+
 // Function to prompt the user at the end of the game asking if they want to play again
 function playAgain() {
     let redo = prompt('Play Again? Type "yes", or "no."').toLowerCase();
     return redo === "yes"; // Return true if user enters "yes"
-}
-
-// Main loop: while repeatGame is true, repeat guessGame and update repeatGame using playAgain
-while (repeatGame) {
-    guessGame();
-    repeatGame = playAgain();
 }
