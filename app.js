@@ -9,7 +9,7 @@ let repeatGame = true;
 let players = {};
 
 // Main function to run the guessing game
-function guessGame() {
+let guessGame = () => {
     // Generate a new random number for each game
     const secretNumber = getRandomIntInclusive(minGuess, maxGuess);
 
@@ -49,7 +49,7 @@ function guessGame() {
 }
 
 // Function to add a new player or update an existing player's score
-function newPlayerAdd(userName, guesses) {
+let newPlayerAdd = (userName, guesses) => {
     if (!(userName in players)) {
         addPlayer(userName, guesses);
         return true; // Player was added for the first time
@@ -62,23 +62,23 @@ function newPlayerAdd(userName, guesses) {
     }
 }
 
-function addPlayer(userName, guesses) {
+let addPlayer = (userName, guesses) => {
     let newPlayer = { highScore: guesses };
     players[userName] = newPlayer;
 }
 
 // Function to generate a random number between min and max (inclusive)
-function getRandomIntInclusive(min, max) {
+let getRandomIntInclusive = (min, max) => {
     return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + min);
 }
 
 // Function to prompt the user for a guess
-function userPrompt() {
+let userPrompt = () => {
     return Number(prompt("Please guess the secret number between " + minGuess + " and " + maxGuess + "."));
 }
 
 // Function to check for edge cases (NaN, null, not an integer)
-function edgeCases(userNumber) {
+let edgeCases = (userNumber) => {
     if (isNaN(userNumber) || userNumber === null || !Number.isInteger(userNumber)) {
         alert("Please enter a valid input");
         return true; // Input is invalid
@@ -87,7 +87,7 @@ function edgeCases(userNumber) {
 }
 
 // Function to prompt the user at the end of the game asking if they want to play again
-function playAgain() {
+let playAgain = () => {
     let redo = prompt('Play Again? Type "yes", or "no."').toLowerCase();
     return redo === "yes"; // Return true if user enters "yes"
 }
