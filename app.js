@@ -14,7 +14,8 @@ let guessGame = () => {
 
     // Loops until broken by correct user guess.
     while (true) {
-        let userInput = userPrompt(); // Get user input and check for edge cases
+        let userInput = userPrompt(); // Get user input.
+        // Returns true if input is invalid.
         if (edgeCases(userInput)) {
             continue; // If input is invalid, return back to beginning of while loop
         }
@@ -37,7 +38,7 @@ let guessGame = () => {
                 if (newPlayerAdded) {
                     alert('That is correct ' + userName + '! You have been added to the playerbase with a highscore of: ' + guesses + ' guesses!');
                 }
-                return;
+                return; // Exit Function when guess is correct.
             default:
                 alert("Invalid input");
                 break;
@@ -77,9 +78,10 @@ let userPrompt = () => {
     return Number(prompt("Please guess the secret number between " + minGuess + " and " + maxGuess + "."));
 }
 
-// Function to check for edge cases (NaN, null, not an integer)
+// Function to check for edge cases
 let edgeCases = (userNumber) => {
-    if (isNaN(userNumber) || userNumber === null || !Number.isInteger(userNumber)) {
+    // Checks for falsy values of NaN, null, 0, as well as if the guess is higher than the max guess.
+    if (!userNumber || userNumber < minGuess || userNumber > maxGuess) {
         alert("Please enter a valid input");
         return true; // Input is invalid
     }
@@ -88,12 +90,12 @@ let edgeCases = (userNumber) => {
 
 // Function to prompt the user at the end of the game asking if they want to play again
 let playAgain = () => {
-    let redo = prompt('Play Again? Type "yes", or "no."').toLowerCase();
-    return redo === "yes"; // Return true if user enters "yes"
+    let redo = confirm('Play Again?');
+    return redo; // Return true if user enters "yes"
 }
 
-// Main loop: while repeatGame is true, repeat guessGame and update repeatGame using playAgain
+// Main loop: while repeatGame is true, repeat guessGame and update repeatGame using playAgain.
 while (repeatGame) {
-    guessGame();
-    repeatGame = playAgain();
+    guessGame(); // Run guessGame
+    repeatGame = playAgain(); // Update repeatGame value at the end of the game.
 }
