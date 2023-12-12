@@ -2,25 +2,21 @@
 const minGuess = 1;
 const maxGuess = 10;
 
-// Flag to determine if the game should repeat
-let repeatGame = true;
-
-// Object to hold player highscores
-let players = {};
+let repeatGame = true; // Flag to determine if the game should repeat
+let players = {}; // Object to hold player highscores
+let userName = prompt("Please enter your name"); // Stores user name.
 
 // Main function to run the guessing game
 let guessGame = () => {
-    // Generate a new random number for each game
-    const secretNumber = getRandomIntInclusive(minGuess, maxGuess);
+    const secretNumber = getRandomIntInclusive(minGuess, maxGuess); // Generate a new random number for each game
 
-    let guesses = 0;
-    let userName = prompt("Please enter your name");
+    let guesses = 0; // Start guesses at 0.
 
+    // Loops until broken by correct user guess.
     while (true) {
-        // Get user input and check for edge cases
-        let userInput = userPrompt();
+        let userInput = userPrompt(); // Get user input and check for edge cases
         if (edgeCases(userInput)) {
-            continue;
+            continue; // If input is invalid, return back to beginning of while loop
         }
 
         // Compare user input with the secret number
@@ -35,8 +31,9 @@ let guessGame = () => {
                 break;
             case userInput === secretNumber:
                 guesses++;
-                // Check if the player is new or has a better/worse score
-                let newPlayerAdded = newPlayerAdd(userName, guesses);
+                let newPlayerAdded = newPlayerAdd(userName, guesses); // Check if the player is new or has a better/worse score
+
+                // If player was added as a new player, display welcome message.
                 if (newPlayerAdded) {
                     alert('That is correct ' + userName + '! You have been added to the playerbase with a highscore of: ' + guesses + ' guesses!');
                 }
@@ -51,20 +48,23 @@ let guessGame = () => {
 // Function to add a new player or update an existing player's score
 let newPlayerAdd = (userName, guesses) => {
     if (!(userName in players)) {
-        addPlayer(userName, guesses);
-        return true; // Player was added for the first time
+        addPlayer(userName, guesses); // Use addPlayer function to create new player object.
+        return true; // Return true if player was added for the first time.
     } else {
-        // Compare current score with previous highScore
-        let difference = guesses - players[userName].highScore;
-        alert('That is correct ' + userName + '! You ' + (difference < 0 ? 'beat' : (difference > 0 ? 'did better' : 'tied with')) + ' your previous attempt by ' + Math.abs(difference) + '!');
-        players[userName].highScore = Math.min(guesses, players[userName].highScore);
-        return false; // Player already existed in players object
+        let difference = guesses - players[userName].highScore; // Compare current score with previous highScore.
+
+        // Use ternary to decide if the user receives a tie, win, or lose message based on the difference variable. If number is negative do to more guesses than highScore, use Math.abs()
+        alert('That is correct ' + userName + '! You ' + (difference < 0 ? 'beat' : (difference > 0 ? 'did better' : 'tied with')) + ' on your previous attempt by ' + Math.abs(difference) + ' guesses!');
+
+        players[userName].highScore = Math.min(guesses, players[userName].highScore); // Take the minimum between the highScore and current guess score and equate that to new highScore.
+        return false; // Return false if player already existed in players object.
     }
 }
 
+// Function used by newPlayer add to create a new player.
 let addPlayer = (userName, guesses) => {
-    let newPlayer = { highScore: guesses };
-    players[userName] = newPlayer;
+    let newPlayer = { highScore: guesses }; // Declare a new object for new player.
+    players[userName] = newPlayer; // Add new player object to players object.
 }
 
 // Function to generate a random number between min and max (inclusive)
